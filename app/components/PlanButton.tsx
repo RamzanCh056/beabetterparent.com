@@ -10,7 +10,7 @@ interface PlanButtonProps {
   planTitle: string;
   planPeriod: string;
   price: string;
-  planId: string; // For Stripe
+  planId: string;
 }
 
 export default function PlanButton({ planTitle, planPeriod, price, planId }: PlanButtonProps) {
@@ -77,23 +77,10 @@ export default function PlanButton({ planTitle, planPeriod, price, planId }: Pla
       return;
     }
 
-    setLoading(true);
-    setMessage('Redirecting to payment...');
-    
-    try {
-      const { handleStripeCheckout } = await import('./StripeCheckout');
-      await handleStripeCheckout(
-        planId,
-        planTitle,
-        planPeriod,
-        price,
-        currentUser.uid,
-        currentUser.email
-      );
-    } catch (error: any) {
-      setMessage(`Payment error: ${error.message}`);
-      setLoading(false);
-    }
+    // Payment integration coming soon
+    setMessage('Payment integration coming soon! Please contact us for subscription.');
+    setToastMessage('Payment integration coming soon! Please contact us for subscription.');
+    setShowToast(true);
   };
 
   return (

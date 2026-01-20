@@ -13,37 +13,9 @@ export default function PaymentSuccess() {
   const [status, setStatus] = useState<'success' | 'error' | 'loading'>('loading');
 
   useEffect(() => {
-    const sessionId = searchParams.get('session_id');
-    
-    if (sessionId && currentUser) {
-      // Verify payment and save to paid_users collection
-      fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId,
-          userId: currentUser.uid,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            setStatus('success');
-          } else {
-            setStatus('error');
-          }
-          setLoading(false);
-        })
-        .catch(() => {
-          setStatus('error');
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-      setStatus('error');
-    }
+    // Payment verification removed - Stripe integration disabled
+    setLoading(false);
+    setStatus('error');
   }, [searchParams, currentUser]);
 
   if (loading || status === 'loading') {
