@@ -9,6 +9,9 @@ export function getDeviceFingerprint(): string {
   ctx?.fillText('Device fingerprint', 2, 2);
   const canvasFingerprint = canvas.toDataURL();
 
+  // Safely access deviceMemory (not in all browsers/TypeScript definitions)
+  const deviceMemory = (navigator as any).deviceMemory || 0;
+  
   const fingerprint = [
     navigator.userAgent,
     navigator.language,
@@ -16,7 +19,7 @@ export function getDeviceFingerprint(): string {
     new Date().getTimezoneOffset(),
     canvasFingerprint,
     navigator.hardwareConcurrency || 0,
-    navigator.deviceMemory || 0,
+    deviceMemory,
   ].join('|');
 
   // Create a simple hash
